@@ -20,6 +20,9 @@ public class DiceContextMenuUI : MonoBehaviour
 
         if (btnClose != null)
             btnClose.onClick.AddListener(Close);
+
+        if (btnReroll != null)
+            btnReroll.onClick.AddListener(OnClickReroll);
     }
 
     public void Open(DiceView targetDice, Vector2 screenPos)
@@ -70,5 +73,14 @@ public class DiceContextMenuUI : MonoBehaviour
     {
         gameObject.SetActive(false);
         target = null;
+    }
+
+    private void OnClickReroll()
+    {
+        if (target == null)
+            return;
+
+        target.Reroll();
+        Close();
     }
 }

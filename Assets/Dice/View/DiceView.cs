@@ -68,5 +68,11 @@ namespace DiceSystem
                 face.color = new Color(1f, 0.4f, 0.7f);
             }
         }
+
+        public void Reroll()
+        {
+            int newFace = Random.Range(1, 7);
+            SetFace(newFace);
+        }
     }
 }
