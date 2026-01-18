@@ -27,6 +27,8 @@ namespace DiceSystem
                     view.transform.localPosition = GetLocalPos(x, y);
                     view.Bind(map.Get(x, y));
 
+                    view.gameObject.AddComponent<DiceDragHandler>();
+
                     views[x, y] = view;
                 }
             }
