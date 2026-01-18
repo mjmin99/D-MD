@@ -12,9 +12,6 @@ namespace DiceSystem
         [Header("Layout")]
         [SerializeField] private Vector2 screenOffset = new Vector2(16f, -16f);
 
-        [Header("Screen Clamp")]
-        [SerializeField] private float screenMargin = 20f;
-
         private Camera cam;
 
         private void Awake()
