@@ -1831,7 +1831,7 @@ GameObject:
   - component: {fileID: 934242568}
   - component: {fileID: 934242567}
   m_Layer: 0
-  m_Name: 20181203171837_6507e3778c4259d4b85f127e40a9d5fe_a1u6
+  m_Name: privateBoard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1904,8 +1904,8 @@ Transform:
   m_GameObject: {fileID: 934242566}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.4855437, y: -3.019458, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 5.1211, y: -2.5913, z: 0}
+  m_LocalScale: {x: 1.1139, y: 1.237877, z: 1.1139}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -4136,7 +4136,7 @@ GameObject:
   - component: {fileID: 1954070223}
   - component: {fileID: 1954070222}
   m_Layer: 0
-  m_Name: 20181203171837_6507e3778c4259d4b85f127e40a9d5fe_a1u6 (1)
+  m_Name: PrivateBoard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4209,8 +4209,8 @@ Transform:
   m_GameObject: {fileID: 1954070221}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.4855437, y: 0.8194077, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 5.1211, y: 1.91, z: 0}
+  m_LocalScale: {x: 1.1139, y: 1.237877, z: 1.1139}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
