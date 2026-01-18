@@ -143,7 +143,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -165,7 +165,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -187,7 +187,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -209,7 +209,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -231,7 +231,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -253,7 +253,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -275,7 +275,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -297,7 +297,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -319,7 +319,7 @@ TextureImporter:
         width: 64
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -328,6 +328,138 @@ TextureImporter:
       bones: []
       spriteID: 5e9c376a073f673439adb868a283b72f
       internalID: 2102127516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceAtlas_9
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 129
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2081f07b3f7dd504eb416431eba1d0eb
+      internalID: -715934767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceAtlas_10
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 65
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 034d6d32c069ea641a1ecf64aa3312b7
+      internalID: 575047459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceAtlas_11
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 65
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de88136a937eb8944b0d5681dd9c99b8
+      internalID: 1612066985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceAtlas_12
+      rect:
+        serializedVersion: 2
+        x: 129
+        y: 65
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1a264622bc31614f99e9a21297cc6c1
+      internalID: -1483637779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceAtlas_13
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 65
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da5de190fb9e1ca4789e3a0f4fd89e19
+      internalID: 1445570513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DiceAtlas_14
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 62
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb673009141f08c4b8bbcf8f42dd88f5
+      internalID: 1007765726
       vertices: []
       indices: 
       edges: []
@@ -348,6 +480,11 @@ TextureImporter:
     nameFileIdTable:
       DiceAtlas_0: 1343317990
       DiceAtlas_1: -1960328448
+      DiceAtlas_10: 575047459
+      DiceAtlas_11: 1612066985
+      DiceAtlas_12: -1483637779
+      DiceAtlas_13: 1445570513
+      DiceAtlas_14: 1007765726
       DiceAtlas_2: -418788820
       DiceAtlas_3: 1299242248
       DiceAtlas_4: 452471818
@@ -355,6 +492,7 @@ TextureImporter:
       DiceAtlas_6: 1056490095
       DiceAtlas_7: -1134696505
       DiceAtlas_8: 2102127516
+      DiceAtlas_9: -715934767
       Pip_0: 8232445685566781887
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

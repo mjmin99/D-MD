@@ -12,7 +12,7 @@ public class DiceContextMenuUI : MonoBehaviour
     public Button btnClose;
 
     private DiceView target;
-
+    [SerializeField] private DiceFacePickerUI facePicker;
     private void Awake()
     {
         // 시작 시 숨김
@@ -23,6 +23,10 @@ public class DiceContextMenuUI : MonoBehaviour
 
         if (btnReroll != null)
             btnReroll.onClick.AddListener(OnClickReroll);
+
+        if (btnChangeFace != null)
+            btnChangeFace.onClick.AddListener(OnClickChangeFace);
+
     }
 
     public void Open(DiceView targetDice, Vector2 screenPos)
@@ -82,5 +86,12 @@ public class DiceContextMenuUI : MonoBehaviour
 
         target.Reroll();
         Close();
+    }
+    private void OnClickChangeFace()
+    {
+        if (target == null || facePicker == null)
+            return;
+
+        facePicker.Open(target, this);
     }
 }
