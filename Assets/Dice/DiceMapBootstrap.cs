@@ -36,16 +36,32 @@ namespace DiceSystem
 
         public void Reshuffle()
         {
-            // 1. DiceData만 다시 섞은 새 맵 생성
-            map = DiceMapGenerator.Generate();
-
-            // 2. 기존 DiceView에 새 데이터 재바인딩
+            // 1. 기존 DiceView 전부 제거
             for (int y = 0; y < DiceMap.Height; y++)
             {
                 for (int x = 0; x < DiceMap.Width; x++)
                 {
-                    views[x, y].Bind(map.Get(x, y));
-                    views[x, y].transform.localPosition = GetLocalPos(x, y);
+                    if (views[x, y] != null)
+                    {
+                        Destroy(views[x, y].gameObject);
+                        views[x, y] = null;
+                    }
+                }
+            }
+
+            // 2. DiceData 새로 생성
+            map = DiceMapGenerator.Generate();
+
+            // 3. 전 좌표에 DiceView 재생성
+            for (int y = 0; y < DiceMap.Height; y++)
+            {
+                for (int x = 0; x < DiceMap.Width; x++)
+                {
+                    DiceView view = Instantiate(dicePrefab, transform);
+                    view.Bind(map.Get(x, y));
+                    view.transform.localPosition = GetLocalPos(x, y);
+
+                    views[x, y] = view;
                 }
             }
         }

@@ -28,6 +28,9 @@ public class DiceContextMenuUI : MonoBehaviour
 
         if (btnReplace != null)
             btnReplace.onClick.AddListener(OnClickReplace);
+
+        if (btnRemove != null)
+            btnRemove.onClick.AddListener(OnClickRemove);
     }
 
     public void Open(DiceView targetDice, Vector2 screenPos)
@@ -102,6 +105,15 @@ public class DiceContextMenuUI : MonoBehaviour
             return;
 
         DiceReplaceService.Instance.ReplaceWithRandom(target);
+        Close();
+    }
+
+    private void OnClickRemove()
+    {
+        if (target == null)
+            return;
+
+        Destroy(target.gameObject);
         Close();
     }
 }
