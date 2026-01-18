@@ -5,9 +5,11 @@ namespace DiceSystem
 {
     public class DiceHoverSystem : MonoBehaviour
     {
-        [SerializeField] private float hoverDelay = 0.2f;
+        [Header("Hover Settings")]
+        [SerializeField] private float hoverDelay = 0.5f;
 
         private Camera cam;
+
         private DiceView currentHover;
         private float hoverTime;
         private bool tooltipShown;
@@ -25,25 +27,40 @@ namespace DiceSystem
             Vector2 mouseWorld =
                 cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
-            RaycastHit2D hit = Physics2D.Raycast(mouseWorld, Vector2.zero);
+            RaycastHit2D hit =
+                Physics2D.Raycast(mouseWorld, Vector2.zero);
+
             DiceView hitView = hit.collider
                 ? hit.collider.GetComponentInParent<DiceView>()
                 : null;
 
-            if (hitView != null)
+            // 🔁 Hover 대상이 바뀐 경우
+            if (hitView != currentHover)
             {
-                // 🔥 딜레이, 상태 전부 무시하고 바로 표시
-                DiceTooltipController.Instance.Show(hitView, mouseWorld);
+                ClearHover();
+                currentHover = hitView;
             }
-            else
+
+            if (currentHover == null)
+                return;
+
+            // Hover 시간 누적
+            hoverTime += Time.deltaTime;
+
+            // 지연 후 Tooltip 표시
+            if (!tooltipShown && hoverTime >= hoverDelay)
             {
-                DiceTooltipController.Instance.HideAll();
+                tooltipShown = true;
+                DiceTooltipController.Instance?.Show(
+                    currentHover,
+                    mouseWorld
+                );
             }
         }
 
-        private void ResetHover()
+        private void ClearHover()
         {
-            if (tooltipShown && currentHover != null)
+            if (tooltipShown)
             {
                 DiceTooltipController.Instance?.HideAll();
             }
