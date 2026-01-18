@@ -29,36 +29,52 @@ namespace DiceSystem
 
         public void Show(DiceData data, Vector2 hoverWorldPos)
         {
-            if (data == null || cam == null)
+            if (data == null)
                 return;
+
+            var canvas = GetComponentInParent<Canvas>();
+            var canvasRT = canvas.transform as RectTransform;
 
             root.gameObject.SetActive(true);
 
-            // 1. 월드 → 스크린
+            // 월드 → 스크린
             Vector2 screenPos = cam.WorldToScreenPoint(hoverWorldPos);
 
-            // 2. 네가 만든 예쁜 오프셋 그대로 사용
-            Vector2 targetPos = screenPos + screenOffset;
+            // 스크린 → Canvas 로컬
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                canvasRT,
+                screenPos,
+                canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera,
+                out Vector2 localPos
+            );
 
-            // 3. 화면 밖 방지
-            targetPos = ClampToScreen(targetPos);
+            Vector2 pos = localPos + screenOffset;
 
-            root.position = targetPos;
+            // ===== Canvas 기준 Clamp =====
+            Vector2 size = root.rect.size;
+            Vector2 pivot = root.pivot;
+            Vector2 canvasSize = canvasRT.rect.size;
+
+            float left = pos.x - size.x * pivot.x;
+            float right = pos.x + size.x * (1f - pivot.x);
+            float bottom = pos.y - size.y * pivot.y;
+            float top = pos.y + size.y * (1f - pivot.y);
+
+            if (right > canvasSize.x / 2f)
+                pos.x -= (right - canvasSize.x / 2f);
+
+            if (left < -canvasSize.x / 2f)
+                pos.x -= (left + canvasSize.x / 2f);
+
+            if (top > canvasSize.y / 2f)
+                pos.y -= (top - canvasSize.y / 2f);
+
+            if (bottom < -canvasSize.y / 2f)
+                pos.y -= (bottom + canvasSize.y / 2f);
+            // ==============================
+
+            root.anchoredPosition = pos;
             text.text = BuildText(data);
-        }
-
-        private Vector2 ClampToScreen(Vector2 pos)
-        {
-            float minX = screenMargin;
-            float maxX = Screen.width - screenMargin;
-
-            float minY = screenMargin;
-            float maxY = Screen.height - screenMargin;
-
-            pos.x = Mathf.Clamp(pos.x, minX, maxX);
-            pos.y = Mathf.Clamp(pos.y, minY, maxY);
-
-            return pos;
         }
 
         public void Hide()

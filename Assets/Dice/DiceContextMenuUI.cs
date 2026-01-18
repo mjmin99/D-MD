@@ -81,6 +81,9 @@ public class DiceContextMenuUI : MonoBehaviour
     {
         gameObject.SetActive(false);
         target = null;
+
+        if (DiceContextMenuSystem.Instance != null)
+            DiceContextMenuSystem.Instance.NotifyClosed();
     }
 
     private void OnClickReroll()

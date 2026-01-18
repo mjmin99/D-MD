@@ -32,6 +32,12 @@ namespace DiceSystem
 
         private void Update()
         {
+            if (DiceContextMenuSystem.Instance != null &&
+                DiceContextMenuSystem.Instance.IsOpen)
+            {
+                return;
+            }
+
             if (Mouse.current == null || cam == null)
                 return;
 
@@ -81,6 +87,11 @@ namespace DiceSystem
             tooltipShown = false;
             currentHover = null;
             CurrentHoverDice = null;  
+        }
+
+        public void ForceClearHover()
+        {
+            ClearHover();
         }
     }
 }

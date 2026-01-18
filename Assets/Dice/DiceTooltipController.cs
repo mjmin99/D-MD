@@ -15,7 +15,6 @@ namespace DiceSystem
         private void Awake()
         {
             Instance = this;
-            tooltipUI?.Hide();
         }
 
         public void Show(DiceView view, Vector2 worldPos)

@@ -6,6 +6,7 @@ public class DiceContextMenuSystem : MonoBehaviour
 {
     public static DiceContextMenuSystem Instance { get; private set; }
 
+    public bool IsOpen { get; private set; }
     [SerializeField] private DiceContextMenuUI menuUI;
 
     private void Awake()
@@ -49,15 +50,20 @@ public class DiceContextMenuSystem : MonoBehaviour
 
     private void OpenMenu(DiceView target, Vector2 screenPos)
     {
-        // Tooltip이 떠 있었다면 정리
         DiceTooltipController.Instance?.HideAll();
 
         if (menuUI == null)
-        {
-            Debug.LogWarning("[ContextMenu] menuUI is null");
             return;
-        }
 
+        IsOpen = true;
         menuUI.Open(target, screenPos);
+    }
+
+    public void NotifyClosed()
+    {
+        IsOpen = false;
+
+        if (DiceHoverSystem.Instance != null)
+            DiceHoverSystem.Instance.ForceClearHover();
     }
 }
