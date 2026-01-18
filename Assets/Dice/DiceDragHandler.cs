@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 namespace DiceSystem
 {
@@ -17,6 +18,8 @@ namespace DiceSystem
         private void Update()
         {
             if (Mouse.current == null)
+                return;
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
                 return;
 
             if (!isDragging && Mouse.current.leftButton.wasPressedThisFrame)
