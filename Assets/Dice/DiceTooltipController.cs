@@ -15,9 +15,6 @@ namespace DiceSystem
         private void Awake()
         {
             Instance = this;
-
-            Debug.Log($"[TooltipController] tooltipUI = {tooltipUI}");
-
             tooltipUI?.Hide();
         }
 

@@ -5,8 +5,12 @@ namespace DiceSystem
 {
     public class DiceHoverSystem : MonoBehaviour
     {
+        public static DiceHoverSystem Instance { get; private set; }
+
         [Header("Hover Settings")]
         [SerializeField] private float hoverDelay = 0.5f;
+
+        public DiceView CurrentHoverDice { get; private set; }
 
         private Camera cam;
 
@@ -16,6 +20,13 @@ namespace DiceSystem
 
         private void Awake()
         {
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
             cam = Camera.main;
         }
 
@@ -34,11 +45,12 @@ namespace DiceSystem
                 ? hit.collider.GetComponentInParent<DiceView>()
                 : null;
 
-            // 🔁 Hover 대상이 바뀐 경우
+            // Hover 대상이 바뀐 경우
             if (hitView != currentHover)
             {
                 ClearHover();
                 currentHover = hitView;
+                CurrentHoverDice = hitView; 
             }
 
             if (currentHover == null)
@@ -68,6 +80,7 @@ namespace DiceSystem
             hoverTime = 0f;
             tooltipShown = false;
             currentHover = null;
+            CurrentHoverDice = null;  
         }
     }
 }
