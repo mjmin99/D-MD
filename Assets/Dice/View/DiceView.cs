@@ -11,6 +11,8 @@ namespace DiceSystem
         [Header("Face Sprites (Index 0 = 1)")]
         [SerializeField] private Sprite[] faceSprites; // size = 6
 
+        public bool IsExtraDice { get; private set; }
+
         public DiceData Data { get; private set; }
         private int currentFace;
 
@@ -24,9 +26,10 @@ namespace DiceSystem
                 face = transform.Find("Face")?.GetComponent<SpriteRenderer>();
         }
 
-        public void Bind(DiceData data)
+        public void Bind(DiceData data, bool isExtraDice = false)
         {
             Data = data;
+            IsExtraDice = isExtraDice;
 
             ApplyColor();
 
