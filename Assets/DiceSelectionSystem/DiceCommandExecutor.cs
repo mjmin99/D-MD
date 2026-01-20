@@ -7,11 +7,11 @@ public static class DiceCommandExecutor
     public static void RerollSelected()
     {
         var selected = DiceSelectionController.Instance.Selected;
-        Debug.Log($"RerollSelected count = {selected.Count}");
+        // Debug.Log($"RerollSelected count = {selected.Count}");
 
         foreach (var dice in selected)
         {
-            Debug.Log($" - reroll {dice.name}");
+            // Debug.Log($" - reroll {dice.name}");
             dice.Reroll();
         }
     }
