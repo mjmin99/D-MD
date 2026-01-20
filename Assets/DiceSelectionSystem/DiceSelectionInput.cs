@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Linq;
 
 public class DiceSelectionInput : MonoBehaviour
 {
@@ -11,11 +12,14 @@ public class DiceSelectionInput : MonoBehaviour
     [SerializeField] private RectTransform selectionBox;
     [SerializeField] private Canvas canvas;
 
-    private Vector2 dragStartLocal;
     private bool isDragging;
 
     private Vector2 dragStartScreen;
     private Vector2 dragEndScreen;
+
+    private bool isGroupDragging;
+    private Vector3 dragStartMouseWorld;
+    private Dictionary<DiceView, Vector3> dragStartPositions = new();
 
     void Awake()
     {
@@ -26,23 +30,23 @@ public class DiceSelectionInput : MonoBehaviour
     void Update()
     {
         if (DiceContextMenuSystem.Instance != null &&
-    DiceContextMenuSystem.Instance.IsOpen)
+        DiceContextMenuSystem.Instance.IsOpen)
             return;
 
         if (Input.GetMouseButtonDown(0))
-        {
             OnMouseDown();
-        }
+
+        if (isGroupDragging && Input.GetMouseButton(0))
+            UpdateGroupDrag();
+
+        if (Input.GetMouseButtonUp(0))
+            EndGroupDrag();
 
         if (Input.GetMouseButton(0) && isDragging)
-        {
             UpdateSelectionBox();
-        }
 
         if (Input.GetMouseButtonUp(0) && isDragging)
-        {
             CompleteBoxSelection();
-        }
     }
 
     void OnMouseDown()
@@ -51,7 +55,18 @@ public class DiceSelectionInput : MonoBehaviour
 
         if (clickedDice != null)
         {
-            DiceSelectionController.Instance.SelectSingle(clickedDice);
+            var selection = DiceSelectionController.Instance.Selected;
+
+            // 이미 선택된 주사위를 클릭했다면 → 집단 이동
+            if (selection.Contains(clickedDice) && selection.Count > 1)
+            {
+                StartGroupDrag();
+            }
+            else
+            {
+                DiceSelectionController.Instance.SelectSingle(clickedDice);
+            }
+
             isDragging = false;
         }
         else
@@ -63,6 +78,40 @@ public class DiceSelectionInput : MonoBehaviour
             UpdateSelectionBox();
         }
     }
+
+    void UpdateGroupDrag()
+    {
+        Vector3 currentMouseWorld = cam.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 delta = currentMouseWorld - dragStartMouseWorld;
+        delta.z = 0f;
+
+        foreach (var pair in dragStartPositions)
+        {
+            if (!pair.Key) continue;
+            pair.Key.transform.position = pair.Value + delta;
+        }
+    }
+
+    void EndGroupDrag()
+    {
+        isGroupDragging = false;
+        dragStartPositions.Clear();
+    }
+
+    void StartGroupDrag()
+    {
+        isGroupDragging = true;
+        dragStartMouseWorld = cam.ScreenToWorldPoint(Input.mousePosition);
+
+        dragStartPositions.Clear();
+
+        foreach (var dice in DiceSelectionController.Instance.Selected)
+        {
+            if (!dice) continue;
+            dragStartPositions[dice] = dice.transform.position;
+        }
+    }
+
 
     DiceView RaycastDice()
     {
