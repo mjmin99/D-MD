@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using NUnit.Framework;
+using UnityEngine;
 
 namespace DiceSystem
 {

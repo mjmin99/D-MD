@@ -41,7 +41,7 @@ namespace DiceSystem
             if (lastMousePos == Vector2.zero)
                 lastMousePos = mouseScreenPos;
 
-            // ⭐ 마우스가 움직였는지 확인
+            // 마우스가 움직였는지 확인
             bool mouseMoved =
                 Vector2.Distance(mouseScreenPos, lastMousePos) > mouseMoveThreshold;
 

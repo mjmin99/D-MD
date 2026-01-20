@@ -94,7 +94,7 @@ public class DiceContextMenuUI : MonoBehaviour
 
     private void OnClickReroll()
     {
-        Debug.Log("ContextMenu: Reroll clicked");
+        // Debug.Log("ContextMenu: Reroll clicked");
         DiceCommandExecutor.RerollSelected();
         Close();
     }

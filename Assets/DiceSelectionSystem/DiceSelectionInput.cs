@@ -52,6 +52,10 @@ public class DiceSelectionInput : MonoBehaviour
 
     void OnMouseDown()
     {
+        if (EventSystem.current != null &&
+        EventSystem.current.IsPointerOverGameObject())
+            return;
+
         DiceView clickedDice = RaycastDice();
 
         if (clickedDice != null)
