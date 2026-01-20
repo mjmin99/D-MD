@@ -130,14 +130,23 @@ public class DiceSelectionInput : MonoBehaviour
         Vector2 min = Vector2.Min(dragStartScreen, dragEndScreen);
         Vector2 max = Vector2.Max(dragStartScreen, dragEndScreen);
 
+        Rect selectionRect = Rect.MinMaxRect(min.x, min.y, max.x, max.y);
+
         List<DiceView> selected = new();
 
         foreach (var dice in FindObjectsByType<DiceView>(FindObjectsSortMode.None))
         {
-            Vector2 screenPos = cam.WorldToScreenPoint(dice.transform.position);
+            var col = dice.GetComponent<Collider2D>();
+            if (col == null) continue;
 
-            if (screenPos.x >= min.x && screenPos.x <= max.x &&
-                screenPos.y >= min.y && screenPos.y <= max.y)
+            Bounds b = col.bounds;
+
+            Vector2 screenMin = cam.WorldToScreenPoint(b.min);
+            Vector2 screenMax = cam.WorldToScreenPoint(b.max);
+
+            // 완전 포함 판정
+            if (selectionRect.Contains(screenMin) &&
+                selectionRect.Contains(screenMax))
             {
                 selected.Add(dice);
             }
