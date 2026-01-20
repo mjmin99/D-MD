@@ -31,7 +31,7 @@ public class DiceSelectionController : MonoBehaviour
     // 단일 선택 (MVP 핵심)
     public void SelectSingle(DiceView dice)
     {
-        Debug.Log($"SelectSingle: {dice}");
+        // Debug.Log($"SelectSingle: {dice}");
         if (dice == null)
         {
             Clear();
@@ -67,9 +67,20 @@ public class DiceSelectionController : MonoBehaviour
     {
         var visual = dice.GetComponent<DiceSelectionVisual>();
 
-        Debug.Log($"SetVisual: {dice.name}, visual={(visual != null)}, selected={selected}");
+        // Debug.Log($"SetVisual: {dice.name}, visual={(visual != null)}, selected={selected}");
 
         if (visual != null)
             visual.SetSelected(selected);
+    }
+
+    public void SetSelection(IEnumerable<DiceView> dices)
+    {
+        ClearInternal();
+
+        foreach (var dice in dices)
+        {
+            selected.Add(dice);
+            SetVisual(dice, true);
+        }
     }
 }

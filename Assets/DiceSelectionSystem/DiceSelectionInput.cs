@@ -1,38 +1,76 @@
 ﻿using DiceSystem;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class DiceSelectionInput : MonoBehaviour
 {
     private Camera cam;
 
+    [Header("Selection Box UI")]
+    [SerializeField] private RectTransform selectionBox;
+    [SerializeField] private Canvas canvas;
+
+    private Vector2 dragStartLocal;
+    private bool isDragging;
+
+    private Vector2 dragStartScreen;
+    private Vector2 dragEndScreen;
+
     void Awake()
     {
         cam = Camera.main;
+        selectionBox.gameObject.SetActive(false);
     }
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            TrySelectDice();
+            OnMouseDown();
+        }
+
+        if (Input.GetMouseButton(0) && isDragging)
+        {
+            UpdateSelectionBox();
+        }
+
+        if (Input.GetMouseButtonUp(0) && isDragging)
+        {
+            CompleteBoxSelection();
         }
     }
 
-    void TrySelectDice()
+    void OnMouseDown()
+    {
+        DiceView clickedDice = RaycastDice();
+
+        if (clickedDice != null)
+        {
+            DiceSelectionController.Instance.SelectSingle(clickedDice);
+            isDragging = false;
+        }
+        else
+        {
+            isDragging = true;
+            dragStartScreen = Input.mousePosition;
+
+            selectionBox.gameObject.SetActive(true);
+            UpdateSelectionBox();
+        }
+    }
+
+    DiceView RaycastDice()
     {
         Vector2 worldPos = cam.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D[] hits = Physics2D.RaycastAll(worldPos, Vector2.zero);
-
-        Debug.Log($"Raycast hits count: {hits.Length}");
 
         DiceView topDice = null;
         int highestOrder = int.MinValue;
 
         foreach (var hit in hits)
         {
-            Debug.Log($"Hit: {hit.collider.name} / layer={hit.collider.gameObject.layer}");
-
-            var dice = hit.collider.GetComponentInParent<DiceSystem.DiceView>();
+            var dice = hit.collider.GetComponentInParent<DiceView>();
             if (dice == null) continue;
 
             var sr = dice.GetComponentInChildren<SpriteRenderer>();
@@ -45,6 +83,62 @@ public class DiceSelectionInput : MonoBehaviour
             }
         }
 
-        DiceSelectionController.Instance.SelectSingle(topDice);
+        return topDice;
+    }
+
+    void UpdateSelectionBox()
+    {
+        Vector2 currentScreen = Input.mousePosition;
+
+        RectTransform canvasRect = canvas.transform as RectTransform;
+
+        Vector2 startLocal;
+        Vector2 currentLocal;
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRect,
+            dragStartScreen,
+            null,
+            out startLocal
+        );
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRect,
+            currentScreen,
+            null,
+            out currentLocal
+        );
+
+        Vector2 min = Vector2.Min(startLocal, currentLocal);
+        Vector2 max = Vector2.Max(startLocal, currentLocal);
+
+        selectionBox.anchoredPosition = min;
+        selectionBox.sizeDelta = max - min;
+    }
+
+    void CompleteBoxSelection()
+    {
+        selectionBox.gameObject.SetActive(false);
+        isDragging = false;
+
+        dragEndScreen = Input.mousePosition;
+
+        Vector2 min = Vector2.Min(dragStartScreen, dragEndScreen);
+        Vector2 max = Vector2.Max(dragStartScreen, dragEndScreen);
+
+        List<DiceView> selected = new();
+
+        foreach (var dice in FindObjectsByType<DiceView>(FindObjectsSortMode.None))
+        {
+            Vector2 screenPos = cam.WorldToScreenPoint(dice.transform.position);
+
+            if (screenPos.x >= min.x && screenPos.x <= max.x &&
+                screenPos.y >= min.y && screenPos.y <= max.y)
+            {
+                selected.Add(dice);
+            }
+        }
+
+        DiceSelectionController.Instance.SetSelection(selected);
     }
 }
