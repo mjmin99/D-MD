@@ -31,10 +31,6 @@ namespace DiceSystem
             Data = data;
             IsExtraDice = isExtraDice;
 
-
-            Debug.Log($"[Bind] apply color {Data.color}");
-
-
             ApplyColor();
 
             // 임시: 시작 눈금
