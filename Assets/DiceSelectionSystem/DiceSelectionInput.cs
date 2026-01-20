@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 public class DiceSelectionInput : MonoBehaviour
 {
@@ -111,7 +112,6 @@ public class DiceSelectionInput : MonoBehaviour
             dragStartPositions[dice] = dice.transform.position;
         }
     }
-
 
     DiceView RaycastDice()
     {

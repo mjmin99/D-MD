@@ -59,6 +59,7 @@ MonoBehaviour:
   - {fileID: 1056490095, guid: 704157ed6f227a9419514615141b5972, type: 3}
   - {fileID: -1134696505, guid: 704157ed6f227a9419514615141b5972, type: 3}
   - {fileID: 2102127516, guid: 704157ed6f227a9419514615141b5972, type: 3}
+  colorPalette: {fileID: 11400000, guid: 16790e990d63e944cb8f5f404dae43cc, type: 2}
 --- !u!114 &8414794573785447812
 MonoBehaviour:
   m_ObjectHideFlags: 0

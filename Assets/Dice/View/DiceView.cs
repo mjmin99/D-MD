@@ -16,6 +16,7 @@ namespace DiceSystem
         public DiceData Data { get; private set; }
         private int currentFace;
 
+        [SerializeField] private DiceColorPalette colorPalette;
 
         private void Awake()
         {
@@ -39,17 +40,23 @@ namespace DiceSystem
 
         private void ApplyColor()
         {
-            body.color = Data.color switch
-            {
-                DiceColor.White => Color.white,
-                DiceColor.Red => Color.red,
-                DiceColor.Yellow => Color.yellow,
-                DiceColor.Green => Color.green,
-                DiceColor.Blue => Color.blue,
-                DiceColor.Purple => new Color(0.6f, 0.3f, 0.8f),
-                _ => Color.gray
-            };
+            if (colorPalette != null)
+                body.color = colorPalette.Get(Data.color);
         }
+
+        // private void ApplyColor()
+        // {
+        //     body.color = Data.color switch
+        //     {
+        //         DiceColor.White => Color.white,
+        //         DiceColor.Red => Color.red,
+        //         DiceColor.Yellow => Color.yellow,
+        //         DiceColor.Green => Color.green,
+        //         DiceColor.Blue => Color.blue,
+        //         DiceColor.Purple => new Color(0.6f, 0.3f, 0.8f),
+        //         _ => Color.gray
+        //     };
+        // }
 
 
         /// <summary>

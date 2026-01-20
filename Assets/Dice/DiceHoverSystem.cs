@@ -9,6 +9,7 @@ namespace DiceSystem
 
         [Header("Hover Settings")]
         [SerializeField] private float hoverDelay = 0.5f;
+        [SerializeField] private float mouseMoveThreshold = 0.02f;
 
         public DiceView CurrentHoverDice { get; private set; }
 
@@ -17,6 +18,8 @@ namespace DiceSystem
         private DiceView currentHover;
         private float hoverTime;
         private bool tooltipShown;
+
+        private Vector2 lastMousePos;
 
         private void Awake()
         {
@@ -32,6 +35,25 @@ namespace DiceSystem
 
         private void Update()
         {
+            Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+
+            // 처음 프레임 보정
+            if (lastMousePos == Vector2.zero)
+                lastMousePos = mouseScreenPos;
+
+            // ⭐ 마우스가 움직였는지 확인
+            bool mouseMoved =
+                Vector2.Distance(mouseScreenPos, lastMousePos) > mouseMoveThreshold;
+
+            lastMousePos = mouseScreenPos;
+
+            // 마우스가 움직였으면 Tooltip 즉시 숨김
+            if (mouseMoved)
+            {
+                ClearHover();
+                return;
+            }
+
             if (DiceContextMenuSystem.Instance != null &&
                 DiceContextMenuSystem.Instance.IsOpen)
             {
