@@ -31,6 +31,10 @@ namespace DiceSystem
             Data = data;
             IsExtraDice = isExtraDice;
 
+
+            Debug.Log($"[Bind] apply color {Data.color}");
+
+
             ApplyColor();
 
             // 임시: 시작 눈금
@@ -76,6 +80,12 @@ namespace DiceSystem
         {
             int newFace = Random.Range(1, 7);
             SetFace(newFace);
+        }
+
+        public void RefreshColor()
+        {
+            ApplyColor();
+            // 필요하면 나중에 다른 비주얼 갱신도 여기에 추가
         }
     }
 }

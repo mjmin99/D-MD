@@ -10,9 +10,12 @@ public class DiceContextMenuUI : MonoBehaviour
     public Button btnReplace;
     public Button btnRemove;
     public Button btnClose;
+    public Button btnSetToContaminated;
+    public Button btnChangeColor;
 
     private DiceView target;
     [SerializeField] private DiceFacePickerUI facePicker;
+    [SerializeField] private DiceColorPickerUI colorPicker;
     private void Awake()
     {
         gameObject.SetActive(false);
@@ -31,6 +34,12 @@ public class DiceContextMenuUI : MonoBehaviour
 
         if (btnRemove != null)
             btnRemove.onClick.AddListener(OnClickRemove);
+
+        if (btnSetToContaminated != null)
+            btnSetToContaminated.onClick.AddListener(OnClickSetToContaminated);
+
+        if (btnChangeColor != null)
+            btnChangeColor.onClick.AddListener(OnClickChangeColor);
     }
 
     public void Open(DiceView targetDice, Vector2 screenPos)
@@ -118,5 +127,31 @@ public class DiceContextMenuUI : MonoBehaviour
 
         Destroy(target.gameObject);
         Close();
+    }
+
+    private void OnClickSetToContaminated()
+    {
+        if (target == null)
+            return;
+
+        int contamFace = target.Data.contaminatedFace;
+
+        // White 주사위(-1) 방어
+        if (contamFace < 1)
+            return;
+
+        // 현재 눈금을 오염면으로 맞춘다
+        target.SetFace(contamFace);
+
+        Close();
+    }
+
+    private void OnClickChangeColor()
+    {
+        if (target == null)
+            return;
+
+        // 서브 UI 오픈
+        colorPicker.Open(target, this);
     }
 }
