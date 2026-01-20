@@ -15,7 +15,6 @@ public class DiceColorPickerUI : MonoBehaviour
 
     public Button btnClose;
 
-    private DiceView target;
     private DiceContextMenuUI owner;
 
     private void Awake()
@@ -32,31 +31,23 @@ public class DiceColorPickerUI : MonoBehaviour
         }
     }
 
-    public void Open(DiceView targetDice, DiceContextMenuUI ownerMenu)
+    public void Open(DiceContextMenuUI ownerMenu)
     {
-        target = targetDice;
         owner = ownerMenu;
         gameObject.SetActive(true);
     }
 
     private void OnPick(DiceColor color)
     {
-        if (target != null)
-        {
-            target.Data.color = color;
+        DiceCommandExecutor.SetColorSelected(color);
 
-            // DiceView에 추가해 둔 public 래퍼
-            target.RefreshColor();
-        }
-
-        owner.Close();          // 메인 컨텍스트 메뉴 닫기
-        gameObject.SetActive(false);
-        target = null;
+        owner.Close();
+        Close();
     }
 
     public void Close()
     {
         gameObject.SetActive(false);
-        target = null;
+        owner = null;
     }
 }

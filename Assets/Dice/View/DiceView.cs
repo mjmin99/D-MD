@@ -57,19 +57,15 @@ namespace DiceSystem
         /// </summary>
         public void SetFace(int value)
         {
+            if (!this || face == null)
+                return;
+
             currentFace = value;
 
-            // 1. 스프라이트 설정
-            face.sprite = faceSprites[value - 1];
+            int index = Mathf.Clamp(value - 1, 0, faceSprites.Length - 1);
+            face.sprite = faceSprites[index];
 
-            // 2. 기본 색 (정상 면)
-            face.color = Color.black;
-
-            // 3. 오염면이면 분홍색
-            if (Data.contaminatedFace == value)
-            {
-                face.color = new Color(1f, 0.4f, 0.7f);
-            }
+            RefreshFaceColor();
         }
 
         public void Reroll()
@@ -82,6 +78,26 @@ namespace DiceSystem
         {
             ApplyColor();
             // 필요하면 나중에 다른 비주얼 갱신도 여기에 추가
+        }
+
+        public void SetColor(DiceColor newColor)
+        {
+            if (Data == null)
+                return;
+
+            Data.color = newColor;
+            ApplyColor();
+        }
+
+        private void RefreshFaceColor()
+        {
+            if (Data == null || face == null)
+                return;
+
+            if (Data.contaminatedFace == currentFace)
+                face.color = Color.magenta; // 분홍
+            else
+                face.color = Color.black;    // 기본 회색
         }
     }
 }

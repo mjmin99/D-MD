@@ -40,15 +40,14 @@ public class DiceContextMenuSystem : MonoBehaviour
             return;
         }
 
-        var hovered = DiceHoverSystem.Instance.CurrentHoverDice;
-        if (hovered == null)
+        if (!DiceSelectionController.Instance.HasSelection)
             return;
 
         Vector2 mousePos = Mouse.current.position.ReadValue();
-        OpenMenu(hovered, mousePos);
+        OpenMenu(mousePos);
     }
 
-    private void OpenMenu(DiceView target, Vector2 screenPos)
+    private void OpenMenu(Vector2 screenPos)
     {
         DiceTooltipController.Instance?.HideAll();
 
@@ -56,7 +55,7 @@ public class DiceContextMenuSystem : MonoBehaviour
             return;
 
         IsOpen = true;
-        menuUI.Open(target, screenPos);
+        menuUI.Open(screenPos);
     }
 
     public void NotifyClosed()

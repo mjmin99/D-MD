@@ -6,7 +6,6 @@ public class DiceFacePickerUI : MonoBehaviour
 {
     [SerializeField] private Button[] faceButtons; // 크기 6
 
-    private DiceView target;
     private DiceContextMenuUI owner;
 
     public Button btnClose;
@@ -25,26 +24,23 @@ public class DiceFacePickerUI : MonoBehaviour
         }
     }
 
-    public void Open(DiceView targetDice, DiceContextMenuUI ownerMenu)
+    public void Open(DiceContextMenuUI ownerMenu)
     {
-        target = targetDice;
         owner = ownerMenu;
         gameObject.SetActive(true);
     }
 
     private void OnPick(int face)
     {
-        if (target != null)
-            target.SetFace(face);
+        DiceCommandExecutor.SetFaceSelected(face);
 
         owner.Close();      // 메인 메뉴 닫기
         gameObject.SetActive(false);
-        target = null;
     }
 
     public void Close()
     {
         gameObject.SetActive(false);
-        target = null;
+        owner = null;
     }
 }

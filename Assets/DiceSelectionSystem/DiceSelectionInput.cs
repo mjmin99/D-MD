@@ -25,6 +25,10 @@ public class DiceSelectionInput : MonoBehaviour
 
     void Update()
     {
+        if (DiceContextMenuSystem.Instance != null &&
+    DiceContextMenuSystem.Instance.IsOpen)
+            return;
+
         if (Input.GetMouseButtonDown(0))
         {
             OnMouseDown();

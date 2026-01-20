@@ -1,4 +1,5 @@
-﻿using DiceSystem;
+﻿using System.Collections.Generic;
+using DiceSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +14,6 @@ public class DiceContextMenuUI : MonoBehaviour
     public Button btnSetToContaminated;
     public Button btnChangeColor;
 
-    private DiceView target;
     [SerializeField] private DiceFacePickerUI facePicker;
     [SerializeField] private DiceColorPickerUI colorPicker;
     private void Awake()
@@ -42,10 +42,8 @@ public class DiceContextMenuUI : MonoBehaviour
             btnChangeColor.onClick.AddListener(OnClickChangeColor);
     }
 
-    public void Open(DiceView targetDice, Vector2 screenPos)
+    public void Open(Vector2 screenPos)
     {
-        target = targetDice;
-
         var rt = (RectTransform)transform;
         var canvas = GetComponentInParent<Canvas>();
         var canvasRT = canvas.transform as RectTransform;
@@ -89,7 +87,6 @@ public class DiceContextMenuUI : MonoBehaviour
     public void Close()
     {
         gameObject.SetActive(false);
-        target = null;
 
         if (DiceContextMenuSystem.Instance != null)
             DiceContextMenuSystem.Instance.NotifyClosed();
@@ -97,61 +94,51 @@ public class DiceContextMenuUI : MonoBehaviour
 
     private void OnClickReroll()
     {
-        if (target == null)
-            return;
-
-        target.Reroll();
+        Debug.Log("ContextMenu: Reroll clicked");
+        DiceCommandExecutor.RerollSelected();
         Close();
     }
     private void OnClickChangeFace()
     {
-        if (target == null || facePicker == null)
+        if (facePicker == null)
             return;
 
-        facePicker.Open(target, this);
+        facePicker.Open(this); // target 제거
     }
 
     private void OnClickReplace()
     {
-        if (target == null)
-            return;
-
-        DiceReplaceService.Instance.ReplaceWithRandom(target);
+        DiceCommandExecutor.ReplaceSelected();
         Close();
     }
 
     private void OnClickRemove()
     {
-        if (target == null)
-            return;
+        var selected = DiceSelectionController.Instance.Selected;
 
-        Destroy(target.gameObject);
+        // snapshot을 떠야 안전 (Destroy 중 컬렉션 변경 방지)
+        var toRemove = new List<DiceView>(selected);
+
+        foreach (var dice in toRemove)
+        {
+            if (!dice)
+                continue;
+
+            DiceSelectionController.Instance.RemoveFromSelection(dice);
+            Destroy(dice.gameObject);
+        }
+
         Close();
     }
 
     private void OnClickSetToContaminated()
     {
-        if (target == null)
-            return;
-
-        int contamFace = target.Data.contaminatedFace;
-
-        // White 주사위(-1) 방어
-        if (contamFace < 1)
-            return;
-
-        // 현재 눈금을 오염면으로 맞춘다
-        target.SetFace(contamFace);
-
+        DiceCommandExecutor.SetToContaminatedSelected();
         Close();
     }
 
     private void OnClickChangeColor()
     {
-        if (target == null)
-            return;
-
-        // 서브 UI 오픈
-        colorPicker.Open(target, this);
+        colorPicker.Open(this);
     }
 }
