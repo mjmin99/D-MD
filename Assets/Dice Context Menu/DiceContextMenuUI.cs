@@ -13,9 +13,11 @@ public class DiceContextMenuUI : MonoBehaviour
     public Button btnClose;
     public Button btnSetToContaminated;
     public Button btnChangeColor;
+    public Button btnDrawDice;
 
     [SerializeField] private DiceFacePickerUI facePicker;
     [SerializeField] private DiceColorPickerUI colorPicker;
+    [SerializeField] private DiceDrawPickerUI drawPicker;
     private void Awake()
     {
         gameObject.SetActive(false);
@@ -40,6 +42,9 @@ public class DiceContextMenuUI : MonoBehaviour
 
         if (btnChangeColor != null)
             btnChangeColor.onClick.AddListener(OnClickChangeColor);
+
+        if (btnDrawDice != null)
+            btnDrawDice.onClick.AddListener(OnClickDrawDice);
     }
 
     public void Open(Vector2 screenPos)
@@ -140,5 +145,27 @@ public class DiceContextMenuUI : MonoBehaviour
     private void OnClickChangeColor()
     {
         colorPicker.Open(this);
+    }
+
+    private void OnClickDrawDice()
+    {
+        var selection = DiceSelectionController.Instance;
+        int count = selection.Selected.Count;
+
+        if (count == 0)
+            return;
+
+        drawPicker.Open(count, OnPickDrawCount);
+    }
+
+    private void OnPickDrawCount(int n)
+    {
+        var selection = DiceSelectionController.Instance;
+        var current = selection.Selected;
+
+        var picked = DiceRandomPicker.PickN(current, n);
+        selection.SetSelection(picked);
+
+        Close();
     }
 }

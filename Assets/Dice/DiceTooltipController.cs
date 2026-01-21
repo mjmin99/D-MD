@@ -24,7 +24,7 @@ namespace DiceSystem
 
             current = view;
 
-            // ⭐ 현재 눈금(currentFace)까지 전달
+            // 현재 눈금(currentFace)까지 전달
             tooltipUI.Show(
                 view.Data,
                 view.currentFace,
