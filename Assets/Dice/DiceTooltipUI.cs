@@ -106,7 +106,6 @@ namespace DiceSystem
             }
             else
             {
-                // string magentaHex = ColorUtility.ToHtmlStringRGB(Color.magenta);
                 contam = $"<color=#{magentaHex}>{data.contaminatedFace}</color>";
             }
 
@@ -114,9 +113,8 @@ namespace DiceSystem
             {
                 return
                     $"{colorLine}" +
-                    $"오염면: {contam}\n\n" +
+                    $"현재 눈금: {currentFace}   오염면: {contam}\n\n" +
 
-                    // $"현재 눈금: {currentFace}\n\n" + 현재 눈금을 알려줄 필요가 사라졌음
                     $"해당 주사위는 <color=#{magentaHex}>오염</color>되었습니다.\n\n" +
 
                     "- 오염된 주사위는 인카운트 할 수 없습니다.\n\n" +
@@ -131,15 +129,15 @@ namespace DiceSystem
             {
                 return
                     $"{colorLine}" +
-                    $"오염면: {contam}\n\n" +
-                    // $"현재 눈금: {currentFace}\n\n" + 현재 눈금을 알려줄 필요가 사라졌음
+                    $"현재 눈금: {currentFace}   오염면: {contam}\n\n" +
+
                     "인카운트: 없음";
             }
 
             return
                 $"{colorLine}" +
-                $"오염면: {contam}\n\n" +
-                // $"현재 눈금: {currentFace}\n\n" + 현재 눈금을 알려줄 필요가 사라졌음
+                $"현재 눈금: {currentFace}   오염면: {contam}\n\n" +
+
                 $"인카운트: {encounter.encounterName}\n" +
                 $"{encounter.description}";
         }

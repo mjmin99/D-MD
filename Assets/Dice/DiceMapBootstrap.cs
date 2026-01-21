@@ -5,6 +5,9 @@ namespace DiceSystem
 {
     public class DiceMapBootstrap : MonoBehaviour
     {
+        public static DiceMapBootstrap Instance { get; private set; }
+
+
         [SerializeField] private DiceView dicePrefab;
         [SerializeField] private float cellSize = 1.1f;
 
@@ -20,6 +23,26 @@ namespace DiceSystem
         private void Start()
         {
             GenerateNewMap();
+        }
+
+        private void Awake()
+        {
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            Instance = this;
+        }
+
+        public DiceData CreateDiceData(DiceColor color, int contaminatedFace)
+        {
+            return new DiceData
+            {
+                color = color,
+                contaminatedFace = contaminatedFace,
+                encounterTable = defaultEncounterTable
+            };
         }
 
         private void GenerateNewMap()

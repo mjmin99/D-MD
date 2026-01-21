@@ -53,12 +53,11 @@ namespace DiceSystem
                 ? -1
                 : Random.Range(1, 7);
 
-            // DiceData가 class/struct 무엇이든 “새 인스턴스”로 만들어주면 됨
-            return new DiceData
-            {
-                color = color,
-                contaminatedFace = contaminated
-            };
+            // 핵심 수정: DiceMapBootstrap을 통해 생성
+            return DiceMapBootstrap.Instance.CreateDiceData(
+                color,
+                contaminated
+            );
         }
 
         private DiceColor GetRandomColor(bool includeWhite)
