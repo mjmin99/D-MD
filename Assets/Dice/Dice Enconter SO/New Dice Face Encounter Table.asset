@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb5270de251a7f34e8166e164be17981, type: 3}
+  m_Name: New Dice Face Encounter Table
+  m_EditorClassIdentifier: Assembly-CSharp::DiceFaceEncounterTable
+  entries:
+  - face: 1
+    encounter: {fileID: 11400000, guid: aee4010513c73b94892d5f4261dbccf9, type: 2}
+  - face: 2
+    encounter: {fileID: 11400000, guid: 03e95d66eac66b040bc8ab8879d2178f, type: 2}
+  - face: 3
+    encounter: {fileID: 11400000, guid: 0b4760bc18db637478f374b6ad224b73, type: 2}
+  - face: 4
+    encounter: {fileID: 11400000, guid: 76e3bf1a107fc7f4782658a07dab9500, type: 2}
+  - face: 5
+    encounter: {fileID: 11400000, guid: 1ec5d97b88af0844ca84d5ded5b48fec, type: 2}
+  - face: 6
+    encounter: {fileID: 11400000, guid: 9c0b6ab8c47f7f641a97ad71d415d39b, type: 2}

@@ -14,7 +14,7 @@ namespace DiceSystem
         public bool IsExtraDice { get; private set; }
 
         public DiceData Data { get; private set; }
-        private int currentFace;
+        public int currentFace;
 
         [SerializeField] private DiceColorPalette colorPalette;
 

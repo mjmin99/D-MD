@@ -23,7 +23,13 @@ namespace DiceSystem
                 return;
 
             current = view;
-            tooltipUI.Show(view.Data, worldPos);
+
+            // ⭐ 현재 눈금(currentFace)까지 전달
+            tooltipUI.Show(
+                view.Data,
+                view.currentFace,
+            worldPos
+            );
         }
 
         public void HideAll()

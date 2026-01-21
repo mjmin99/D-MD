@@ -2099,8 +2099,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4282927176
-  m_fontColor: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}
+    rgba: 4281019179
+  m_fontColor: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2117,8 +2117,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2186,8 +2186,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.7, y: 151.3}
-  m_SizeDelta: {x: 514.657, y: 50}
+  m_AnchoredPosition: {x: -0.00000047684, y: 0.000018358}
+  m_SizeDelta: {x: 522.015, y: 362.729}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &685503544
 GameObject:
@@ -5128,6 +5128,7 @@ MonoBehaviour:
   dicePrefab: {fileID: 7053818149761272473, guid: 4cde70bf04f6d2e48ae779e3837d4231, type: 3}
   cellSize: 0.65
   spawnZone: {fileID: 245477545}
+  defaultEncounterTable: {fileID: 11400000, guid: b6c55190eebc9f843841866f3c04db99, type: 2}
 --- !u!4 &1431811635
 Transform:
   m_ObjectHideFlags: 0
@@ -5311,6 +5312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DiceSystem.DiceHoverSystem
   hoverDelay: 0.5
+  mouseMoveThreshold: 0.02
 --- !u!4 &1457348543
 Transform:
   m_ObjectHideFlags: 0
@@ -5963,7 +5965,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DiceSystem.DiceTooltipUI
   root: {fileID: 1746832899}
   text: {fileID: 662137017}
-  screenOffset: {x: 260, y: -195}
+  screenOffset: {x: 275, y: -195}
+  colorPalette: {fileID: 11400000, guid: 16790e990d63e944cb8f5f404dae43cc, type: 2}
 --- !u!224 &1746832899
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5997,7 +6000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.9411765}
+  m_Color: {r: 0.83921576, g: 0.83921576, b: 0.83921576, a: 0.92156863}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

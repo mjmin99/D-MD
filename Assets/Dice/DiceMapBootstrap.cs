@@ -11,6 +11,9 @@ namespace DiceSystem
         [Header("Random Spawn Zone")]
         [SerializeField] private BoxCollider2D spawnZone;
 
+        [Header("Encounter Table (SO)")]
+        [SerializeField] private DiceFaceEncounterTable defaultEncounterTable;
+
         private DiceMap map;
         private DiceView[,] views = new DiceView[DiceMap.Width, DiceMap.Height];
 
@@ -29,6 +32,10 @@ namespace DiceSystem
                 {
                     DiceView view = Instantiate(dicePrefab, transform);
                     view.transform.localPosition = GetLocalPos(x, y);
+
+                    var data = map.Get(x, y);
+                    EnsureEncounterTable(data);
+
                     view.Bind(map.Get(x, y));
 
                     view.gameObject.AddComponent<DiceDragHandler>();
@@ -64,12 +71,29 @@ namespace DiceSystem
                 for (int x = 0; x < DiceMap.Width; x++)
                 {
                     DiceView view = Instantiate(dicePrefab, transform);
+
+                    var data = map.Get(x, y);
+                    EnsureEncounterTable(data);
+
                     view.Bind(map.Get(x, y));
                     view.transform.localPosition = GetLocalPos(x, y);
+
+                    if (!view.GetComponent<DiceDragHandler>())
+                        view.gameObject.AddComponent<DiceDragHandler>();
 
                     views[x, y] = view;
                 }
             }
+        }
+
+        private void EnsureEncounterTable(DiceData data)
+        {
+            if (data == null) return;
+
+            // DiceData에 encounterTable 필드가 존재한다는 가정
+            // (없으면 여기서 컴파일 에러 나니까 DiceData에 필드 추가 필요)
+            if (data.encounterTable == null)
+                data.encounterTable = defaultEncounterTable;
         }
 
         private Vector2 GetLocalPos(int x, int y)
@@ -94,9 +118,9 @@ namespace DiceSystem
             // 4. DiceView 바인딩
             view.Bind(data, isExtraDice: true);
 
-            // 5. 최초 1회 랜덤 눈금
-            int randomFace = Random.Range(1, 7);
-            view.SetFace(randomFace);
+
+            if (!view.GetComponent<DiceDragHandler>())
+                view.gameObject.AddComponent<DiceDragHandler>();
         }
 
         private DiceData CreateRandomDiceData()
@@ -110,7 +134,8 @@ namespace DiceSystem
             return new DiceData
             {
                 color = color,
-                contaminatedFace = contaminatedFace
+                contaminatedFace = contaminatedFace,
+                encounterTable = defaultEncounterTable
             };
         }
 

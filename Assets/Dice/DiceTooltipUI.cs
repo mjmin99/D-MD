@@ -12,6 +12,8 @@ namespace DiceSystem
         [Header("Layout")]
         [SerializeField] private Vector2 screenOffset = new Vector2(16f, -16f);
 
+        [SerializeField] private DiceColorPalette colorPalette;
+
         private Camera cam;
 
         private void Awake()
@@ -24,7 +26,12 @@ namespace DiceSystem
             Hide();
         }
 
-        public void Show(DiceData data, Vector2 hoverWorldPos)
+        private string ColorToHex(Color color)
+        {
+            return ColorUtility.ToHtmlStringRGB(color);
+        }
+
+        public void Show(DiceData data, int currentFace, Vector2 hoverWorldPos)
         {
             if (data == null)
                 return;
@@ -71,7 +78,7 @@ namespace DiceSystem
             // ==============================
 
             root.anchoredPosition = pos;
-            text.text = BuildText(data);
+            text.text = BuildText(data, currentFace);
         }
 
         public void Hide()
@@ -80,23 +87,61 @@ namespace DiceSystem
                 root.gameObject.SetActive(false);
         }
 
-        private string BuildText(DiceData data)
+        private string BuildText(DiceData data, int currentFace)
         {
-            // 오염면 표시(White는 -1이니까 예외처리)
-            string contam = data.contaminatedFace <= 0 ? "없음" : data.contaminatedFace.ToString();
+            string colorHex = ColorToHex(colorPalette.Get(data.color));
 
-            // 지금은 “눈금→인카운트”를 임시 문자열로.
-            // 나중에 EncounterTable 붙이면 여기만 교체하면 됨.
+            string colorLine = $"색상: <color=#{colorHex}>{data.color}</color>\n";
+
+            // 오염면 여부 판단
+            bool isContaminated = data.contaminatedFace > 0 &&
+                                  data.contaminatedFace == currentFace;
+
+            // 오염면 표시(White는 -1이니까 예외처리)
+            string contam;
+            string magentaHex = ColorUtility.ToHtmlStringRGB(Color.magenta);
+            if (data.contaminatedFace <= 0)
+            {
+                contam = "없음";
+            }
+            else
+            {
+                // string magentaHex = ColorUtility.ToHtmlStringRGB(Color.magenta);
+                contam = $"<color=#{magentaHex}>{data.contaminatedFace}</color>";
+            }
+
+            if (isContaminated)
+            {
+                return
+                    $"{colorLine}" +
+                    $"오염면: {contam}\n\n" +
+
+                    // $"현재 눈금: {currentFace}\n\n" + 현재 눈금을 알려줄 필요가 사라졌음
+                    $"해당 주사위는 <color=#{magentaHex}>오염</color>되었습니다.\n\n" +
+
+                    "- 오염된 주사위는 인카운트 할 수 없습니다.\n\n" +
+
+                    "- 협동 인카운트 시 공유주사위로 지정할 수 \n" +
+                    "  없습니다.";
+            }
+
+            var encounter = data.encounterTable?.Get(currentFace);
+
+            if (encounter == null)
+            {
+                return
+                    $"{colorLine}" +
+                    $"오염면: {contam}\n\n" +
+                    // $"현재 눈금: {currentFace}\n\n" + 현재 눈금을 알려줄 필요가 사라졌음
+                    "인카운트: 없음";
+            }
+
             return
-                $"색상: {data.color}\n" +
+                $"{colorLine}" +
                 $"오염면: {contam}\n\n" +
-                "눈금별 인카운트:\n" +
-                "1 → (임시) 인카운트\n" +
-                "2 → (임시) 인카운트\n" +
-                "3 → (임시) 인카운트\n" +
-                "4 → (임시) 인카운트\n" +
-                "5 → (임시) 인카운트\n" +
-                "6 → (임시) 인카운트";
+                // $"현재 눈금: {currentFace}\n\n" + 현재 눈금을 알려줄 필요가 사라졌음
+                $"인카운트: {encounter.encounterName}\n" +
+                $"{encounter.description}";
         }
     }
 }

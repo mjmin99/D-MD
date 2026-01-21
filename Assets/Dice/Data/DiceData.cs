@@ -1,4 +1,6 @@
 ﻿
+using static DiceSystem.DiceTooltipUI;
+
 public enum DiceColor
 {
     White,
@@ -21,5 +23,9 @@ public class DiceData
     /// 오염된 면 (1~6), White 주사위는 -1
     /// </summary>
     public int contaminatedFace;
+
+    public DiceFaceEncounterTable encounterTable;
 }
+
+
 
