@@ -5785,6 +5785,9 @@ MonoBehaviour:
     zoom: 0
   - position: {x: 0, y: 0, z: 0}
     zoom: 0
+  boardMin: {x: -60, y: -30}
+  boardMax: {x: 60, y: 30}
+  margin: 2
 --- !u!1 &1034079539
 GameObject:
   m_ObjectHideFlags: 0

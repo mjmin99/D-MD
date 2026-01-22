@@ -17,6 +17,11 @@ public class BoardCameraController : MonoBehaviour
     private Camera cam;
     private Vector3 lastMouseWorld;
 
+    [Header("Camera Bounds")]
+    public Vector2 boardMin;
+    public Vector2 boardMax;
+    public float margin = 2f; // 보드 밖 여유 공간
+
     void Awake()
     {
         cam = GetComponent<Camera>();
@@ -34,6 +39,7 @@ public class BoardCameraController : MonoBehaviour
     {
         HandleZoom();
         HandlePan();
+        ClampCameraPosition();
     }
 
     // ===============================
@@ -95,6 +101,33 @@ public class BoardCameraController : MonoBehaviour
         presets[index].position = transform.position;
         presets[index].zoom = cam.orthographicSize;
     }
+
+    void ClampCameraPosition()
+    {
+        float halfHeight = cam.orthographicSize;
+        float halfWidth = cam.orthographicSize * cam.aspect;
+
+        float minX = boardMin.x - margin + halfWidth;
+        float maxX = boardMax.x + margin - halfWidth;
+        float minY = boardMin.y - margin + halfHeight;
+        float maxY = boardMax.y + margin - halfHeight;
+
+        Vector3 pos = transform.position;
+
+        // 카메라가 너무 커서 보드를 다 덮을 경우 방어
+        if (minX > maxX)
+            pos.x = (boardMin.x + boardMax.x) * 0.5f;
+        else
+            pos.x = Mathf.Clamp(pos.x, minX, maxX);
+
+        if (minY > maxY)
+            pos.y = (boardMin.y + boardMax.y) * 0.5f;
+        else
+            pos.y = Mathf.Clamp(pos.y, minY, maxY);
+
+        transform.position = new Vector3(pos.x, pos.y, transform.position.z);
+    }
+
 }
 
 [System.Serializable]
